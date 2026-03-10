@@ -40,9 +40,9 @@ export default function Homepage() {
           >
             Pesan Sekarang!
           </Link>
-          <button className="bg-meat-700 shadow-xl font-display py-2 hover:bg-veg-200 duration-300 hover:text-black rounded-full md:text-lg font-bold">
+          <Link to={"/register"} className="bg-meat-700 text-center shadow-xl font-display py-2 hover:bg-veg-200 duration-300 hover:text-black rounded-full md:text-lg font-bold">
             Daftar Sekarang!
-          </button>
+          </Link>
         </div>
       </div>
 
