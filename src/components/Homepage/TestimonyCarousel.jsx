@@ -49,7 +49,7 @@ export default function TestimonyCarousel({ testimonials }) {
   };
 
   return (
-    <div className="relative w-full py-16 flex flex-col items-center overflow-hidden">
+    <div className="relative w-full flex flex-col items-center overflow-hidden">
       {/* ===== ARROW LEFT ===== */}
       <button
         onClick={prevSlide}

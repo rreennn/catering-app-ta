@@ -36,8 +36,7 @@ export default function OrderProcedure() {
           transition={{ delay: 0.2, duration: 0.6 }}
           viewport={{ once: true }}
         >
-          Pesan catering harian favoritmu dengan mudah — pilih metode yang
-          paling sesuai untuk kebutuhanmu.
+          Pesan catering harian favoritmu dengan mudah.
         </motion.p>
       </div>
 
@@ -60,10 +59,10 @@ export default function OrderProcedure() {
           </div>
 
           <ol className="text-left text-gray-700 mb-6 list-decimal list-inside space-y-2 text-sm md:text-base">
-            <li>Pilih menu atau paket harian yang kamu inginkan</li>
-            <li>Isi form pemesanan dengan detail alamat & jadwal</li>
-            <li>Tunggu konfirmasi dari tim kami</li>
-            <li>Lakukan pembayaran dan pesanan mulai dikirim</li>
+            <li>Klik menu dan mulai memilih</li>
+            <li>Klik pesan dan masukkan data penerima</li>
+            <li>Lakukan pembayaran secara online</li>
+            <li>Dapatkan pesan konfirmasi dari kami!</li>
           </ol>
 
           <Link

@@ -75,7 +75,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="w-full fixed top-0 z-50">
+    <header className="md:w-full w-screen fixed top-0 z-50">
       {/* TOP BRAND */}
       <div
         className={`flex flex-col items-center justify-center bg-meat-100 transition-all ease-in-out duration-500 overflow-hidden ${

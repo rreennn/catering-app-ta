@@ -7,19 +7,19 @@ import soto from "../../assets/soto.png";
 const menus = [
   {
     name: "Nasi Goreng",
-    desc: "Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng",
+    desc: "Nasi goreng dengan varian berbeda tiap hari",
     price: "Rp 20.000",
     img: nasiGoreng,
   },
   {
     name: "Salad Sayur",
-    desc: "Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng",
+    desc: "Menu sampingan sayuran yang cocok dengan menu kami",
     price: "Rp 15.000",
     img: salad,
   },
   {
     name: "Soto Ayam",
-    desc: "Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng Ini deskripsi nasi goreng",
+    desc: "Soto dengan varian berbeda tiap minggu",
     price: "Rp 20.000",
     img: soto,
   },

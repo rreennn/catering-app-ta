@@ -7,29 +7,29 @@ export default function FAQSection() {
 
   const faqs = [
     {
-      question: "Berapa minimal langganan catering harian?",
+      question: "Berapa minimal pesanan catering harian?",
       answer:
-        "Minimal langganan adalah 5 hari pemesanan. Kamu bisa memilih paket mingguan atau bulanan sesuai kebutuhan.",
+        "Minimal satu pesanan untuk sekali pembayaran, pesanan bisa lebih fleksibel",
     },
     {
       question: "Apakah menu bisa diganti setiap hari?",
       answer:
-        "Ya, menu kami berganti setiap hari agar tidak membosankan. Kamu juga bisa request tanpa pedas atau tanpa bahan tertentu.",
+        "Menu kami berbeda setiap hari. Menu akan diperbaharui tiap minggunya",
     },
     {
       question: "Jam berapa makanan dikirim?",
       answer:
-        "Pengiriman dilakukan setiap pagi antara pukul 06.00–09.00 untuk paket sarapan dan 10.00–13.00 untuk paket makan siang.",
+        "Pengiriman dilakukan setiap pagi sekitar pukul 09.00 untuk sarapan dan 12.00 untuk makan siang, dan 18.00 untuk makan malam.",
     },
     {
-      question: "Apakah tersedia paket diet atau healthy meal?",
+      question: "Kapan menu bisa dipesan?",
       answer:
-        "Kami menyediakan paket diet, low calorie, dan high protein yang dirancang untuk kebutuhan hidup sehat sehari-hari.",
+        "Menu bisa dipesan 3 jam sebelum waktu pengantaran. Batas maksimal pemesanan pada pukul 05.00 untuk sarapan, 09.00 untuk makan siang, dan 15.00 untuk makan malam",
     },
     {
-      question: "Bagaimana cara berhenti langganan?",
+      question: "Apa saja metode pembayaran yang tersedia?",
       answer:
-        "Kamu bisa menghubungi admin maksimal H-1 sebelum pengiriman untuk menghentikan atau menjeda langganan.",
+        "Pembayaran saat ini dapat dilakukan melalui pembayaran online seperti QRIS, E-Wallet, kartu debit atau kredit, dan lain-lain",
     },
   ];
 

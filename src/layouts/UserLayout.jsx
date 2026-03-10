@@ -5,9 +5,9 @@ import { Outlet } from "react-router-dom";
 
 export default function UserLayout() {
   return (
-    <div className="max-w-screen min-h-screen flex flex-col bg-lightbg">
+    <div className="max-w-screen min-h-screen flex flex-col bg-lightbg overflow-hidden">
       <Navbar />
-      <main className="flex-grow">
+      <main className="grow">
         <Outlet />
       </main>
       <Footer/>
