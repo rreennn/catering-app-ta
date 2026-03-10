@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Young+Serif&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  /* color bg*/
+  --color-lightbg: #f5f3f0;
+  /* color primary */
+  --color-meat-50: #fff8f6;
+  --color-meat-100: #ffede7;
+  --color-meat-200: #ffdbca;
+  --color-meat-300: #ffc9a6;
+  --color-meat-400: #ffb872;
+  --color-meat-500: #e98e00;
+  --color-meat-600: #bc6a00;
+  --color-meat-700: #934b00;
+  --color-meat-800: #6a2f00;
+  --color-meat-900: #3e1500;
+  --color-meat-950: #2e0900;
+  /* color secondary */
+  --color-veg-50: #f2f8dd;
+  --color-veg-100: #e7f1c0;
+  --color-veg-200: #cfe481;
+  --color-veg-300: #b6d642;
+  --color-veg-400: #8aa624;
+  --color-veg-500: #738a1e;
+  --color-veg-600: #5b6d18;
+  --color-veg-700: #465412;
+  --color-veg-800: #2d360c;
+  --color-veg-900: #181d06;
+  --color-veg-950: #0a0d03;
+  /* font */
+  --font-logo: "Young Serif", serif;
+  --font-content: "Inter", sans-serif;
+  --font-display: "Poppins", sans-serif;
+}
