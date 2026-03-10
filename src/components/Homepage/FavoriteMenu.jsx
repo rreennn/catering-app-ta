@@ -1,39 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import nasiGoreng from "../../assets/nasiGoreng.png";
 import salad from "../../assets/salad.png";
 import soto from "../../assets/soto.png";
 
 const menus = [
-  {
-    name: "Nasi Goreng",
-    desc: "Nasi goreng dengan varian berbeda tiap hari",
-    price: "Rp 20.000",
-    img: nasiGoreng,
-  },
-  {
-    name: "Salad Sayur",
-    desc: "Menu sampingan sayuran yang cocok dengan menu kami",
-    price: "Rp 15.000",
-    img: salad,
-  },
-  {
-    name: "Soto Ayam",
-    desc: "Soto dengan varian berbeda tiap minggu",
-    price: "Rp 20.000",
-    img: soto,
-  },
+  { name: "Nasi Goreng", desc: "Nasi goreng dengan varian berbeda tiap hari", price: "Rp 20.000", img: nasiGoreng },
+  { name: "Salad Sayur", desc: "Menu sampingan sayuran yang cocok dengan menu kami", price: "Rp 15.000", img: salad },
+  { name: "Soto Ayam", desc: "Soto dengan varian berbeda tiap minggu", price: "Rp 20.000", img: soto },
 ];
 
 export default function FavoriteMenu() {
   const [active, setActive] = useState(0);
 
-  // posisi parabola (atas, tengah, bawah)
-  const positions = [
-    { y: -180, scale: 0.8, opacity: 0.6 },
-    { y: 0, scale: 1.5, opacity: 1 },
-    { y: 180, scale: 0.8, opacity: 0.6 },
-  ];
+  // Auto-play timer
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActive(prev => (prev + 1) % menus.length);
+    }, 4000); // ganti setiap 4 detik
+
+    return () => clearInterval(interval); // cleanup saat unmount
+  }, []);
 
   return (
     <div className="flex flex-col gap-10 md:gap-20 items-center overflow-hidden w-full min-h-screen pt-10 px-4">
@@ -41,11 +28,8 @@ export default function FavoriteMenu() {
         Menu Favorit
       </h2>
 
-      {/* WRAPPER */}
       <div className="flex flex-col md:flex-row items-center justify-evenly relative w-full font-display gap-10 md:gap-0">
-        {/* ================= MOBILE: CAROUSEL ATAS ================= */}
         <div className="relative w-full md:w-1/2 flex justify-center order-1 md:order-2 min-h-75 md:min-h-125">
-          {/* Background circle */}
           <motion.div
             className="absolute w-70 h-70 md:w-100 md:h-100 bg-meat-300 rounded-full"
             initial={{ opacity: 0 }}
@@ -89,27 +73,16 @@ export default function FavoriteMenu() {
                 className="absolute cursor-pointer select-none w-50 md:w-100 object-contain"
                 animate={{
                   y: window.innerWidth < 768 ? posMobile.y : posDesktop.y,
-                  scale:
-                    window.innerWidth < 768
-                      ? posMobile.scale
-                      : posDesktop.scale,
-                  opacity:
-                    window.innerWidth < 768
-                      ? posMobile.opacity
-                      : posDesktop.opacity,
+                  scale: window.innerWidth < 768 ? posMobile.scale : posDesktop.scale,
+                  opacity: window.innerWidth < 768 ? posMobile.opacity : posDesktop.opacity,
                   zIndex: offset === 0 ? 10 : 5,
                 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 15,
-                }}
+                transition={{ type: "spring", stiffness: 80, damping: 15 }}
                 onClick={() => setActive(i)}
               />
             );
           })}
 
-          {/* Dots */}
           <div className="absolute right-2 md:right-4 flex flex-col gap-4 md:gap-6">
             {menus.map((_, i) => (
               <div
@@ -123,7 +96,6 @@ export default function FavoriteMenu() {
           </div>
         </div>
 
-        {/* ================= DESKRIPSI ================= */}
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
@@ -133,14 +105,8 @@ export default function FavoriteMenu() {
             transition={{ duration: 0.5 }}
             className="flex flex-col justify-center bg-white p-2 md:p-5 rounded-lg shadow-md w-full md:w-1/4 text-center md:text-left order-2 md:order-1"
           >
-            <h3 className="text-xl md:text-2xl font-bold mb-3">
-              {menus[active].name}
-            </h3>
-
-            <p className="text-gray-700 mb-4 text-sm md:text-base text-justify">
-              {menus[active].desc}
-            </p>
-
+            <h3 className="text-xl md:text-2xl font-bold mb-3">{menus[active].name}</h3>
+            <p className="text-gray-700 mb-4 text-sm md:text-base text-justify">{menus[active].desc}</p>
             <p className="font-semibold text-base md:text-lg md:text-end mb-3">
               Start from {menus[active].price}
             </p>
