@@ -202,7 +202,7 @@ const Menupage = () => {
       <h1 className="text-2xl font-display md:text-4xl font-bold text-gray-800 mb-1">
         Pilih Menu
       </h1>
-      <p className=" text-gray-700 mt-2">Catatan: Maksimal pesan Sarapan (05.00 WIB), Makan Siang (09.00 WIB), Makan Malam (15.00 WIB). Waktu pengantaran tertera di atas menu</p>
+      <p className=" text-gray-700 mt-2">Catatan: Maksimal pesan Sarapan (05.00 WIB), Makan Siang (09.00 WIB), Makan Malam (15.00 WIB).</p>
       <p className=" text-gray-700 mb-4">Waktu pengantaran tertera di atas menu</p>
       <div className="flex gap-2 flex-wrap mb-8">
         {DAYS.map((day) => {
