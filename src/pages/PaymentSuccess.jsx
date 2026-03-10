@@ -19,7 +19,7 @@ const PaymentSuccess = () => {
         const cleanId = orderId.replace("ORDER-", "");
 
         const res = await axios.get(
-          `http://localhost:5000/api/orders/public/${cleanId}`,
+          `${import.meta.env.VITE_API_URL}/orders/public/${cleanId}`,
         );
 
         setOrder(res.data);
