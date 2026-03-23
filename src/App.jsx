@@ -15,10 +15,12 @@ import Cartpage from "./pages/Cartpage";
 import Historypage from "./pages/Historypage";
 import DetailHistoryPage from "./pages/DetailHistoryPage";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import {Toaster} from "react-hot-toast";
 
 function App() {
   return (
     <BrowserRouter>
+        <Toaster position="top-center"/>
       <Routes>
         <Route path="/" element={<UserLayout />}>
           <Route index element={<Homepage />} /> {/* Landing Page */}

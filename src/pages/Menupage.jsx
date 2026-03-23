@@ -4,6 +4,7 @@ import { getMenus } from "../services/menuService";
 import { addItemToCart, getOrCreateCart } from "../services/cartService";
 import { checkoutGuest } from "../services/orderService";
 import Loading from "../components/Loading";
+import toast from "react-hot-toast";
 
 const DAYS = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 const MEAL_TYPE_LABEL = {
@@ -75,6 +76,7 @@ const Menupage = () => {
       const data = await getMenus();
       setMenus(data.filter((m) => m.is_active));
     } catch (err) {
+      toast.error("Terjadi kesalahan");
       console.error("Fetch menu error:", err);
     } finally {
       setLoading(false);
@@ -129,38 +131,47 @@ const Menupage = () => {
 
   const handleAddToCart = async () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
+
     if (!auth?.token) {
-      alert("Harap login terlebih dahulu");
+      toast.error("Harap login terlebih dahulu");
       return;
     }
 
     try {
-      const cartData = await getOrCreateCart();
+      await getOrCreateCart();
+
       const promises = Object.values(cart).map((item) => {
-        const menuId = item.menuId;
-        let carbDipilih = item.carb?._id || item.carb || null;
-        let extra = item.extras?.length > 0 ? item.extras[0] : null;
         const payload = {
-          menu: menuId,
-          carb_dipilih: carbDipilih,
-          extra,
+          menu: item.menuId,
+          carb_dipilih: item.carb?._id || item.carb || null,
+          extra: item.extras?.length > 0 ? item.extras[0] : null,
           hari_dipilih: item.hari,
         };
+
         return addItemToCart(payload);
       });
 
       const results = await Promise.allSettled(promises);
-      results.forEach((res, i) => {
-        if (res.status === "fulfilled")
-          console.log(`Item ${i} berhasil`, res.value);
-        else console.error(`Item ${i} gagal`, res.reason);
-      });
 
-      alert("Proses selesai. Lihat console untuk detail hasil setiap item.");
-      setCart({});
+      const successCount = results.filter(
+        (r) => r.status === "fulfilled",
+      ).length;
+      const failCount = results.filter((r) => r.status === "rejected").length;
+
+      if (successCount > 0) {
+        toast.success(`${successCount} item berhasil ditambahkan`);
+      }
+
+      if (failCount > 0) {
+        toast.error(`${failCount} item gagal ditambahkan`);
+      }
+
+      if (successCount > 0) setCart({});
     } catch (err) {
-      console.error("Error handleAddToCart:", err.response?.data || err);
-      alert(err.response?.data?.message || "Gagal menambahkan ke cart");
+      const message =
+        err.response?.data?.message || "Gagal menambahkan ke cart";
+
+      toast.error(message);
     }
   };
 
@@ -193,7 +204,8 @@ const Menupage = () => {
       const res = await checkoutGuest({ ...guestForm, items: itemsPayload });
       window.snap.pay(res.snapToken);
     } catch (err) {
-      console.error("Guest checkout error:", err.response?.data || err);
+      toast.error("Terjadi kesalahan");
+      console.error(err);
     }
   };
 
@@ -202,8 +214,13 @@ const Menupage = () => {
       <h1 className="text-2xl font-display md:text-4xl font-bold text-gray-800 mb-1">
         Pilih Menu
       </h1>
-      <p className=" text-gray-700 mt-2">Catatan: Maksimal pesan Sarapan (05.00 WIB), Makan Siang (09.00 WIB), Makan Malam (15.00 WIB).</p>
-      <p className=" text-gray-700 mb-4">Waktu pengantaran tertera di atas menu</p>
+      <p className=" text-gray-700 mt-2">
+        Catatan: Maksimal pesan Sarapan (05.00 WIB), Makan Siang (09.00 WIB),
+        Makan Malam (15.00 WIB).
+      </p>
+      <p className=" text-gray-700 mb-4">
+        Waktu pengantaran tertera di atas menu
+      </p>
       <div className="flex gap-2 flex-wrap mb-8">
         {DAYS.map((day) => {
           const disabled = isDayDisabled(day);

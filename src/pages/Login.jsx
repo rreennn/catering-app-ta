@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../context/useAuth";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../services/authService";
+import toast from "react-hot-toast";
 
 function Login() {
   const { login } = useAuth();
@@ -19,12 +20,14 @@ function Login() {
       login(data);
 
       if (data.role === "admin") {
+        toast.success("Login berhasil!")
         navigate("/admin");
       } else {
+        toast.success("Login berhasil!")
         navigate("/");
       }
     } catch (err) {
-      alert(err.response?.data?.message || "Login gagal");
+      toast.error("Email atau password tidak sesuai")
     }
   };
 
@@ -42,6 +45,7 @@ function Login() {
               placeholder="Masukkan email Anda"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
               className="border border-gray-300 rounded-md p-2"
             />
 
@@ -50,6 +54,7 @@ function Login() {
               placeholder="Masukkan password Anda"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
               className="border border-gray-300 rounded-md p-2"
             />
 

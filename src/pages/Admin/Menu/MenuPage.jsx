@@ -18,6 +18,8 @@ const MenuPage = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState(null);
+  const [filterDay, setFilterDay] = useState("");
+  const [filterMeal, setFilterMeal] = useState("");
 
   /* ================= FETCH DATA ================= */
 
@@ -92,6 +94,14 @@ const MenuPage = () => {
     }
   };
 
+  const filteredMenus = menus.filter((menu) => {
+    const matchDay = filterDay ? menu.hari_tersedia?.includes(filterDay) : true;
+
+    const matchMeal = filterMeal ? menu.meal_type === filterMeal : true;
+
+    return matchDay && matchMeal;
+  });
+
   if (loading) return <p>Loading menu...</p>;
 
   return (
@@ -106,9 +116,48 @@ const MenuPage = () => {
           Tambah Menu
         </button>
       </div>
+      <div className="flex flex-wrap gap-4 mb-4">
+        {/* FILTER HARI */}
+        <select
+          value={filterDay}
+          onChange={(e) => setFilterDay(e.target.value)}
+          className="border px-3 py-2 rounded"
+        >
+          <option value="">Semua Hari</option>
+          <option value="Senin">Senin</option>
+          <option value="Selasa">Selasa</option>
+          <option value="Rabu">Rabu</option>
+          <option value="Kamis">Kamis</option>
+          <option value="Jumat">Jumat</option>
+          <option value="Sabtu">Sabtu</option>
+        </select>
+
+        {/* FILTER MEAL */}
+        <select
+          value={filterMeal}
+          onChange={(e) => setFilterMeal(e.target.value)}
+          className="border px-3 py-2 rounded"
+        >
+          <option value="">Semua Meal</option>
+          <option value="breakfast">Breakfast</option>
+          <option value="lunch">Lunch</option>
+          <option value="dinner">Dinner</option>
+        </select>
+
+        {/* RESET */}
+        <button
+          onClick={() => {
+            setFilterDay("");
+            setFilterMeal("");
+          }}
+          className="bg-gray-200 px-4 py-2 rounded"
+        >
+          Reset
+        </button>
+      </div>
 
       <MenuList
-        menus={menus}
+        menus={filteredMenus}
         onEdit={handleEdit}
         onDelete={handleDelete}
         mode="active"

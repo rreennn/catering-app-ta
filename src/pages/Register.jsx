@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../services/authService";
+import toast from "react-hot-toast";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -27,20 +28,19 @@ const RegisterPage = () => {
     try {
       setLoading(true);
 
-      await registerUser({
-        ...form,
-        role: "user",
-      });
+      await registerUser(form);
 
-      alert("Register berhasil!");
+      toast.success("Register berhasil!");
       navigate("/login");
     } catch (err) {
-      setError(err.response?.data?.message || "Register gagal");
+      const message = err.response?.data?.message || "Register gagal";
+
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <>
       <div className="max-w-screen min-h-screen flex justify-center items-center bg-lightbg">
