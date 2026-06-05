@@ -86,7 +86,7 @@ const RegisterPage = () => {
               disabled={loading}
               className="bg-veg-200 rounded-md p-2 hover:bg-veg-400 duration-200"
             >
-              {loading ? "Loading..." : "Register"}
+              {loading ? "Memproses..." : "Register"}
             </button>
           </form>
           <div className="flex justify-between">

@@ -7,6 +7,8 @@ import {
 import { checkoutCart } from "../services/orderService";
 import CartDayCard from "../components/Cart/CartDayCard";
 import groupCartByDate from "../helpers/groupCartbyDate";
+import Loading from "../components/Loading";
+import toast from "react-hot-toast";
 
 const Cartpage = () => {
   const auth = JSON.parse(localStorage.getItem("auth"));
@@ -16,6 +18,7 @@ const Cartpage = () => {
   const [cart, setCart] = useState(null);
   const [groupedCart, setGroupedCart] = useState({});
   const [checkedItems, setCheckedItems] = useState({});
+  const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({
     nama_penerima: "",
     no_penerima: "",
@@ -31,6 +34,7 @@ const Cartpage = () => {
 
   // ================= FETCH CART =================
   const fetchCart = async () => {
+    setLoading(true);
     try {
       await getOrCreateCart();
       const data = await getMyCart();
@@ -47,6 +51,8 @@ const Cartpage = () => {
       setCheckedItems(initialChecked);
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -101,6 +107,13 @@ const Cartpage = () => {
       .reduce((t, i) => t + i.harga_item, 0);
   };
 
+  if (loading)
+    return (
+      <div className="flex h-screen justify-center items-center">
+        <Loading />
+      </div>
+    );
+
   if (!cart || cart.items.length === 0) {
     return (
       <div className="p-6 pt-50">
@@ -110,13 +123,14 @@ const Cartpage = () => {
   }
 
   const handleCheckout = async () => {
+    setLoading(true);
     try {
       const selectedItems = cart.items
         .filter((item) => checkedItems[item._id])
         .map((item) => item._id);
 
       if (selectedItems.length === 0) {
-        return alert("Pilih minimal 1 menu");
+        return toast.error("Pilih minimal 1 menu");
       }
 
       const result = await checkoutCart({
@@ -127,7 +141,7 @@ const Cartpage = () => {
       const snapToken = result.snapToken;
 
       if (!window.snap) {
-        alert("Snap Midtrans belum ter-load");
+        toast.error("Snap Midtrans belum ter-load");
         return;
       }
 
@@ -138,21 +152,23 @@ const Cartpage = () => {
         },
 
         onPending: function () {
-          alert("Menunggu pembayaran");
+          toast("Menunggu pembayaran");
         },
 
         onError: function () {
-          alert("Pembayaran gagal");
+          toast.error("Pembayaran gagal");
           // 🔥 Cart tetap ada, tidak perlu fetch ulang
         },
 
         onClose: function () {
-          alert("Pembayaran dibatalkan");
+          toast.error("Pembayaran dibatalkan");
           // 🔥 Cart tetap aman
         },
       });
     } catch (err) {
-      alert(err.response?.data?.message || "Checkout gagal");
+      toast.error(err.response?.data?.message || "Checkout gagal");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -210,9 +226,10 @@ const Cartpage = () => {
 
         <button
           onClick={handleCheckout}
-          className="bg-green-600 text-white px-4 py-2 rounded-lg w-full"
+          className="bg-veg-500 text-white px-4 py-2 rounded-lg w-full hover:bg-veg-600 duration-200"
+          disabled={loading}
         >
-          Checkout
+          {loading ? "Memproses.." : "Checkout"}
         </button>
       </div>
     </div>

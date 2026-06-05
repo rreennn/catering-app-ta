@@ -10,6 +10,7 @@ import {
 import MenuList from "./MenuList";
 import MenuFormModal from "./MenuFormModal";
 import Loading from "../../../components/Admin/Loading";
+import Swal from "sweetalert2"
 
 const MenuPage = () => {
   const [menus, setMenus] = useState([]);
@@ -68,16 +69,39 @@ const MenuPage = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Yakin hapus menu?")) return;
+    Swal.fire({
+      title: "Yakin Hapus Menu?",
+      text: "Menu yang dihapus tidak dapat dikembalikan!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33", 
+      cancelButtonColor: "#3085d6", 
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Batal",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteMenu(id);
 
-    try {
-      await deleteMenu(id);
+          setMenus((prev) => prev.filter((menu) => menu._id !== id));
 
-      // remove langsung dari state
-      setMenus((prev) => prev.filter((menu) => menu._id !== id));
-    } catch (err) {
-      console.error(err);
-    }
+          Swal.fire({
+            title: "Terhapus!",
+            text: "Menu berhasil dihapus dari sistem.",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        } catch (err) {
+          console.error(err);
+          Swal.fire({
+            title: "Gagal!",
+            text: "Gagal menghapus menu. Silakan coba lagi.",
+            icon: "error",
+          });
+        }
+      }
+    });
   };
 
   const handleSubmit = async (payload, menuId) => {
@@ -139,7 +163,7 @@ const MenuPage = () => {
           <option value="Sabtu">Sabtu</option>
         </select>
 
-        {/* FILTER MEAL */}
+        {/* FILTER MEALTYPE */}
         <select
           value={filterMeal}
           onChange={(e) => setFilterMeal(e.target.value)}

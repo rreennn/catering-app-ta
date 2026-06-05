@@ -17,6 +17,12 @@ const CartDayCard = ({
     });
   };
 
+  const MEAL_TYPE_LABEL = {
+  Breakfast: "Sarapan (08.00 WIB)",
+  Lunch: "Makan Siang (12.00 WIB)",
+  Dinner: "Makan Malam (18.00 WIB)",
+};
+
   const totalHari = items.reduce(
     (sum, item) => sum + item.harga_item,
     0
@@ -50,8 +56,8 @@ const CartDayCard = ({
         {items.map((item) => {
 
           const mealTypeLabel =
-            item.menu?.meal_type?.charAt(0).toUpperCase() +
-            item.menu?.meal_type?.slice(1);
+            MEAL_TYPE_LABEL [item.menu?.meal_type?.charAt(0).toUpperCase() +
+            item.menu?.meal_type?.slice(1)];
 
           const carbLabel =
             item.carb_dipilih?.nama ||
@@ -72,8 +78,8 @@ const CartDayCard = ({
             >
 
               <div>
-                <p className="text-xs text-gray-400">
-                  For {mealTypeLabel}
+                <p className="text-gray-900 font-medium">
+                  {mealTypeLabel}
                 </p>
 
                 {menuName && (
@@ -83,7 +89,7 @@ const CartDayCard = ({
                 )}
 
                 {carbLabel && (
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-700">
                     Karbo: {carbLabel}
                   </p>
                 )}

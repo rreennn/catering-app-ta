@@ -7,12 +7,14 @@ import toast from "react-hot-toast";
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
 
     try {
       const data = await loginUser({ email, password });
@@ -28,6 +30,8 @@ function Login() {
       }
     } catch (err) {
       toast.error("Email atau password tidak sesuai")
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -60,9 +64,10 @@ function Login() {
 
             <button
               type="submit"
+              disabled={loading}
               className="bg-veg-200 rounded-md p-2 hover:bg-veg-400 duration-200"
             >
-              Login
+              {loading ? "Memproses..." : "Login"}
             </button>
           </form>
           <div className="flex justify-between">

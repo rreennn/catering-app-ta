@@ -11,6 +11,7 @@ import {
 import CarbList from "./CarbList";
 import CarbModal from "./CarbModal";
 import Loading from "../../../components/Admin/Loading";
+import Swal from "sweetalert2";
 
 const CarbPage = () => {
   const [carbs, setCarbs] = useState([]);
@@ -57,10 +58,37 @@ const CarbPage = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Arsipkan carb template?")) return;
-
-    await deleteCarbTemplate(id);
-    fetchCarbs();
+    Swal.fire({
+      title: "Arsipkan Template?",
+      text: "Apakah Anda yakin ingin mengarsipkan carb template ini?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33", 
+      cancelButtonColor: "#3085d6", 
+      confirmButtonText: "Ya, arsipkan!",
+      cancelButtonText: "Batal",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteCarbTemplate(id);
+          fetchCarbs(); 
+          Swal.fire({
+            title: "Berhasil!",
+            text: "Carb template telah diarsipkan.",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        } catch (err) {
+          console.error(err);
+          Swal.fire({
+            title: "Gagal!",
+            text: "Terjadi kesalahan saat arsip data.",
+            icon: "error",
+          });
+        }
+      }
+    });
   };
 
   const handleActivate = async (id) => {
@@ -80,12 +108,12 @@ const CarbPage = () => {
   };
 
   if (loading)
-      return (
-        <div className="items-center flex justify-center h-screen">
-          {" "}
-          <Loading />
-        </div>
-      );
+    return (
+      <div className="items-center flex justify-center h-screen">
+        {" "}
+        <Loading />
+      </div>
+    );
 
   return (
     <div>
