@@ -192,6 +192,7 @@ const Cartpage = () => {
         />
 
         <input
+          type="number"
           name="no_penerima"
           placeholder="Nomor HP penerima"
           value={form.no_penerima}

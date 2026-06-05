@@ -4,6 +4,7 @@ import {
   getKitchenSummary,
   getOrderStatusSummary,
 } from "../../services/adminDashboardService";
+import Loading from "../../components/Admin/Loading";
 
 const Dashboard = () => {
   const [summary, setSummary] = useState({});
@@ -52,7 +53,13 @@ const Dashboard = () => {
     ));
   };
 
-  if (loading) return <p>Loading dashboard...</p>;
+  if (loading)
+      return (
+        <div className="items-center flex justify-center h-screen">
+          {" "}
+          <Loading />
+        </div>
+      );
 
   return (
     <div>

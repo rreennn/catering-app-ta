@@ -3,6 +3,7 @@ import { getAllOrders } from "../../../services/adminOrderService";
 import OrderModal from "./OrderModal";
 import dayjs from "dayjs";
 import { exportMonthlyOrdersExcel } from "../../../helpers/excelHelpers";
+import Loading from "../../../components/Admin/Loading";
 
 const OrderManagement = () => {
   const [orders, setOrders] = useState([]);
@@ -17,10 +18,10 @@ const OrderManagement = () => {
 
   const [selectedOrder, setSelectedOrder] = useState(null);
 
-  const fetchOrders = async (pageNumber = 1) => {
+  const fetchOrders = async (pageNumber = 1, monthStr = selectedMonth) => {
     try {
       setLoading(true);
-      const data = await getAllOrders(pageNumber);
+      const data = await getAllOrders(pageNumber, monthStr);
       setOrders(data.orders);
       setPage(data.currentPage);
       setTotalPages(data.totalPages);
@@ -32,16 +33,17 @@ const OrderManagement = () => {
   };
 
   useEffect(() => {
-    fetchOrders(page);
-  }, [page]);
+    fetchOrders(page, selectedMonth);
+  }, [page, selectedMonth]);
 
   const flattenedItems = useMemo(() => {
-    return orders.flatMap((order) =>
-      order.items.map((item) => ({
-        ...item,
-        orderRef: order,
-      })),
-    );
+    return orders
+      .flatMap((order) =>
+        order.items.map((item) => ({
+          ...item,
+          orderRef: order,
+        })),
+      );
   }, [orders]);
 
   const todayGrouped = useMemo(() => {
@@ -62,13 +64,15 @@ const OrderManagement = () => {
     return grouped;
   }, [flattenedItems, selectedDate]);
 
-  const monthlyOrders = useMemo(() => {
-    return orders.filter(
-      (order) => dayjs(order.createdAt).format("YYYY-MM") === selectedMonth,
-    );
-  }, [orders, selectedMonth]);
+  const monthlyOrders = orders;
 
-  if (loading) return <p className="p-6">Loading orders...</p>;
+  if (loading)
+    return (
+      <div className="items-center flex justify-center h-screen">
+        {" "}
+        <Loading />
+      </div>
+    );
 
   return (
     <div className="p-6 space-y-10">

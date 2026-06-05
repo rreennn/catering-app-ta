@@ -19,7 +19,7 @@ function Sidebar() {
           Arsip Menu
         </Link>
         <Link to="/admin/carb" className="hover:text-gray-300 duration-150">
-          Manajemen Template Karbo
+          Template Karbohidrat
         </Link>
         <Link to="/admin/orders" className="hover:text-gray-300 duration-150">
           Manajemen Order

@@ -15,7 +15,7 @@ const MEAL_TYPE_LABEL = {
 
 const Menupage = () => {
   const [menus, setMenus] = useState([]);
-  const [selectedDay, setSelectedDay] = useState("Senin");
+
   const [cart, setCart] = useState({});
   const [guestForm, setGuestForm] = useState({
     nama_penerima: "",
@@ -46,6 +46,11 @@ const Menupage = () => {
     if (diff < 0) return true;
     return false;
   };
+
+  const [selectedDay, setSelectedDay] = useState(() => {
+    const firstAvailableDay = DAYS.find((day) => !isDayDisabled(day));
+    return firstAvailableDay || "Senin";
+  });
 
   const isMenuDisabled = (menu, selectedDay) => {
     const now = new Date();
@@ -92,20 +97,17 @@ const Menupage = () => {
     dinner: menusByDay.filter((m) => m.meal_type === "dinner"),
   };
 
-  // === fix cart key supaya unik per meal + hari ===
   const handleSelection = (data) => {
+    const itemKey = `${data.menuId}_${selectedDay}`;
     if (data.clear) {
       setCart((prev) => {
         const newCart = { ...prev };
-        Object.keys(newCart).forEach((key) => {
-          if (key.startsWith(data.meal_type + "_")) delete newCart[key];
-        });
+        delete newCart[itemKey];
         return newCart;
       });
       return;
     }
 
-    const itemKey = `${data.meal_type}_${selectedDay}`;
     setCart((prev) => ({
       ...prev,
       [itemKey]: { ...data, hari: selectedDay },
@@ -120,8 +122,8 @@ const Menupage = () => {
     }, 0);
   };
 
-  const clearMeal = (mealType, day) => {
-    const itemKey = `${mealType}_${day}`;
+  const clearMeal = (menuId, day) => {
+    const itemKey = `${menuId}_${day}`;
     setCart((prev) => {
       const newCart = { ...prev };
       delete newCart[itemKey];
@@ -182,6 +184,7 @@ const Menupage = () => {
   };
 
   const handleGuestCheckout = async () => {
+    setLoading(true);
     try {
       const itemsPayload = Object.values(cart).map((item) => {
         let carbDipilih = item.carb?._id || null;
@@ -206,6 +209,8 @@ const Menupage = () => {
     } catch (err) {
       toast.error("Terjadi kesalahan");
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -260,7 +265,7 @@ const Menupage = () => {
                       <MenuCard
                         key={menu._id}
                         menu={menu}
-                        cartItem={cart[`${menu.meal_type}_${selectedDay}`]}
+                        cartItem={cart[`${menu._id}_${selectedDay}`]}
                         onChange={handleSelection}
                         disabled={isMenuDisabled(menu, selectedDay)}
                       />
@@ -283,7 +288,7 @@ const Menupage = () => {
 
           {Object.values(cart).map((item) => (
             <div
-              key={`${item.meal_type}_${item.hari}`}
+              key={`${item.menuId}_${item.hari}`}
               className="mb-4 text-sm border-b pb-3"
             >
               <p className="font-medium capitalize">
@@ -297,8 +302,8 @@ const Menupage = () => {
                 <p className="text-gray-600">Extra: {item.extras.join(", ")}</p>
               )}
               <button
-                onClick={() => clearMeal(item.meal_type, item.hari)}
-                className="text-red-500 text-xs mt-1 hover:underline"
+                onClick={() => clearMeal(item.menuId, item.hari)}
+                className="bg-red-500 p-1 text-white rounded mt-2 hover:underline"
               >
                 Hapus
               </button>
@@ -324,6 +329,11 @@ const Menupage = () => {
       {showGuestModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl p-6 w-full max-w-md space-y-4">
+            {loading && (
+              <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center z-10">
+                <Loading />
+              </div>
+            )}
             <h3 className="text-lg font-semibold text-gray-800">
               Data Pengiriman
             </h3>
@@ -338,6 +348,7 @@ const Menupage = () => {
             <input
               className="w-full border rounded-lg p-2 text-sm"
               placeholder="No HP"
+              type="number"
               value={guestForm.no_penerima}
               onChange={(e) =>
                 setGuestForm({ ...guestForm, no_penerima: e.target.value })
@@ -356,9 +367,14 @@ const Menupage = () => {
             />
             <button
               onClick={handleGuestCheckout}
-              className="w-full bg-meat-600 text-white py-2 rounded-lg hover:bg-meat-700 transition"
+              disabled={loading}
+              className={`w-full text-white py-2 rounded-lg transition ${
+                loading
+                  ? "bg-meat-400 cursor-not-allowed"
+                  : "bg-meat-600 hover:bg-meat-700"
+              }`}
             >
-              Bayar Sekarang
+              {loading ? "Memproses.." : "Bayar Sekarang"}
             </button>
             <button
               onClick={() => setShowGuestModal(false)}

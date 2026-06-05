@@ -10,6 +10,7 @@ import {
 
 import CarbList from "./CarbList";
 import CarbModal from "./CarbModal";
+import Loading from "../../../components/Admin/Loading";
 
 const CarbPage = () => {
   const [carbs, setCarbs] = useState([]);
@@ -78,7 +79,13 @@ const CarbPage = () => {
     fetchCarbs();
   };
 
-  if (loading) return <p>Loading carb templates...</p>;
+  if (loading)
+      return (
+        <div className="items-center flex justify-center h-screen">
+          {" "}
+          <Loading />
+        </div>
+      );
 
   return (
     <div>

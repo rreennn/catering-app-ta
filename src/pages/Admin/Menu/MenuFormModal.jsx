@@ -136,7 +136,7 @@ const MenuFormModal = ({ menu, carbTemplates, onClose, onSubmit }) => {
 
         {/* Carb Template */}
         {carbMode === "template" && (
-          <div className="mb-3">
+          <div className="mb-3 h-40 overflow-y-scroll">
             {carbTemplates.map((c) => (
               <label key={c._id} className="block">
                 <input
@@ -144,7 +144,7 @@ const MenuFormModal = ({ menu, carbTemplates, onClose, onSubmit }) => {
                   checked={form.carb_template.includes(c._id)}
                   onChange={() => toggleCarbTemplate(c._id)}
                 />
-                {c.nama}
+                {" "}{c.nama}
               </label>
             ))}
           </div>
@@ -202,11 +202,11 @@ const MenuFormModal = ({ menu, carbTemplates, onClose, onSubmit }) => {
 
         {/* ACTION */}
         <div className="flex justify-end gap-2">
-          <button onClick={onClose}>Batal</button>
+          <button className="bg-red-500 hover:bg-red-700 duration-200 px-4 py-2 rounded text-white" onClick={onClose}>Batal</button>
 
           <button
             onClick={handleSubmit}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="bg-blue-500 hover:bg-blue-700 duration-200 text-white px-4 py-2 rounded"
           >
             Simpan
           </button>

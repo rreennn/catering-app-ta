@@ -5,16 +5,10 @@ const MenuCard = ({ menu, onChange, cartItem, disabled }) => {
   const [selectedExtras, setSelectedExtras] = useState([]);
   const [qty, setQty] = useState(1);
 
-  // =========================
-  // Handle Carb Selection
-  // =========================
   const handleCarbChange = (carb) => {
     setSelectedCarb(carb);
   };
 
-  // =========================
-  // Handle Extra Selection
-  // =========================
   const toggleExtra = (extraName) => {
     setSelectedExtras((prev) =>
       prev.includes(extraName)
@@ -23,9 +17,6 @@ const MenuCard = ({ menu, onChange, cartItem, disabled }) => {
     );
   };
 
-  // =========================
-  // Sync ke Parent (MenuPage)
-  // =========================
   useEffect(() => {
     if (!selectedCarb) return;
 
@@ -41,11 +32,8 @@ const MenuCard = ({ menu, onChange, cartItem, disabled }) => {
       harga_final: menu.harga_final,
       harga_extra: totalExtraHarga,
     });
-  }, [selectedCarb, selectedExtras, qty]);
+  }, [selectedCarb, selectedExtras, qty, menu]);
 
-  // =========================
-  // Init state dari cartItem
-  // =========================
   useEffect(() => {
     if (!cartItem) {
       setSelectedCarb(null);
@@ -59,9 +47,6 @@ const MenuCard = ({ menu, onChange, cartItem, disabled }) => {
     setQty(cartItem.qty || 1);
   }, [cartItem]);
 
-  // =========================
-  // Render Carb Options
-  // =========================
   const renderCarbOptions = () => {
     if (menu.carb_template?.length > 0) {
       return menu.carb_template.map((carb) => (
@@ -96,13 +81,13 @@ const MenuCard = ({ menu, onChange, cartItem, disabled }) => {
 
   return (
     <div
-      className={`border rounded-xl p-4 shadow-sm space-y-3 ${
+      className={`border rounded-xl p-4 shadow-sm space-y-3 bg-white ${
         disabled ? "opacity-50 pointer-events-none" : ""
       }`}
     >
       <div>
-        {menu.protein && <p className="text-sm">Protein: {menu.protein}</p>}
-        {menu.veggie && <p className="text-sm">Sayur: {menu.veggie}</p>}
+        {menu.protein && <p className="font-bold">Protein: {menu.protein}</p>}
+        {menu.veggie && <p className="font-bold">Sayur: {menu.veggie}</p>}
       </div>
 
       <div>
@@ -132,8 +117,8 @@ const MenuCard = ({ menu, onChange, cartItem, disabled }) => {
       )}
 
       <p className="font-semibold">Rp {menu.harga_final.toLocaleString()}</p>
-      <button
-        onClick={() => onChange({ meal_type: menu.meal_type, clear: true })}
+      <button className="hover:underline hover:text-red-500 duration-150"
+        onClick={() => onChange({ menuId: menu._id, clear: true })}
       >
         Batalkan
       </button>

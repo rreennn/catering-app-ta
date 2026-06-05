@@ -9,6 +9,7 @@ import {
 
 import MenuList from "./MenuList";
 import MenuFormModal from "./MenuFormModal";
+import Loading from "../../../components/Admin/Loading";
 
 const MenuPage = () => {
   const [menus, setMenus] = useState([]);
@@ -102,7 +103,13 @@ const MenuPage = () => {
     return matchDay && matchMeal;
   });
 
-  if (loading) return <p>Loading menu...</p>;
+  if (loading)
+    return (
+      <div className="items-center flex justify-center h-screen">
+        {" "}
+        <Loading />
+      </div>
+    );
 
   return (
     <div>
@@ -111,7 +118,7 @@ const MenuPage = () => {
 
         <button
           onClick={handleCreate}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 duration-200"
         >
           Tambah Menu
         </button>
@@ -121,7 +128,7 @@ const MenuPage = () => {
         <select
           value={filterDay}
           onChange={(e) => setFilterDay(e.target.value)}
-          className="border px-3 py-2 rounded"
+          className="border px-3 rounded"
         >
           <option value="">Semua Hari</option>
           <option value="Senin">Senin</option>
@@ -136,7 +143,7 @@ const MenuPage = () => {
         <select
           value={filterMeal}
           onChange={(e) => setFilterMeal(e.target.value)}
-          className="border px-3 py-2 rounded"
+          className="border px-3 rounded"
         >
           <option value="">Semua Meal</option>
           <option value="breakfast">Breakfast</option>
@@ -150,7 +157,7 @@ const MenuPage = () => {
             setFilterDay("");
             setFilterMeal("");
           }}
-          className="bg-gray-200 px-4 py-2 rounded"
+          className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-500 hover:text-white duration-200"
         >
           Reset
         </button>

@@ -5,12 +5,6 @@ import dayjs from "dayjs";
 export const exportMonthlyOrdersExcel = (orders, selectedMonth) => {
   if (!orders || orders.length === 0) return;
 
-  /*
-    =========================
-    📊 Sheet 1 → Rekap Transaksi
-    =========================
-  */
-
   const transaksiSheet = orders.map((order, index) => ({
     No: index + 1,
     "Tanggal Order": dayjs(order.createdAt).format("DD-MM-YYYY"),
@@ -20,12 +14,6 @@ export const exportMonthlyOrdersExcel = (orders, selectedMonth) => {
     "Status Pembayaran": order.status_pembayaran,
     "Status Order": order.status_order,
   }));
-
-  /*
-    =========================
-    💰 Summary
-    =========================
-  */
 
   const totalTransaksi = orders.length;
   const totalPendapatan = orders.reduce(
@@ -38,12 +26,6 @@ export const exportMonthlyOrdersExcel = (orders, selectedMonth) => {
     { Keterangan: "Total Transaksi", Nilai: totalTransaksi },
     { Keterangan: "Total Pendapatan", Nilai: totalPendapatan },
   ];
-
-  /*
-    =========================
-    🍱 BONUS → Rekap Menu
-    =========================
-  */
 
   const menuSummary = {};
 
@@ -81,12 +63,6 @@ export const exportMonthlyOrdersExcel = (orders, selectedMonth) => {
     });
   });
 
-  /*
-    =========================
-    📄 Create Workbook
-    =========================
-  */
-
   const wb = XLSX.utils.book_new();
 
   XLSX.utils.book_append_sheet(
@@ -106,12 +82,6 @@ export const exportMonthlyOrdersExcel = (orders, selectedMonth) => {
     XLSX.utils.json_to_sheet(menuSheet),
     "Rekap Menu"
   );
-
-  /*
-    =========================
-    ⬇️ Download File
-    =========================
-  */
 
   const excelBuffer = XLSX.write(wb, {
     bookType: "xlsx",
