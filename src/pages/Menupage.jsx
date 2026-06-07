@@ -16,12 +16,20 @@ const MEAL_TYPE_LABEL = {
 const Menupage = () => {
   const [menus, setMenus] = useState([]);
 
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("guest_cart");
+    return savedCart ? JSON.parse(savedCart) : {};
+  });
+  useEffect(() => {
+    localStorage.setItem("guest_cart", JSON.stringify(cart));
+  }, [cart]);
+
   const [guestForm, setGuestForm] = useState({
     nama_penerima: "",
     no_penerima: "",
     alamat_pengiriman: "",
   });
+
   const [showGuestModal, setShowGuestModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
