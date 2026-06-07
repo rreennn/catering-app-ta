@@ -73,12 +73,14 @@ export default function ContactCard() {
                     <Clock className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-800">Jam Operasional</h4>
+                    <h4 className="font-bold text-slate-800">
+                      Jam Operasional
+                    </h4>
                     <p className="text-slate-600 text-sm">
                       Senin - Sabtu: 08.00 - 17.00
                     </p>
                     <p className="text-sm text-red-500 font-medium">
-                      Minggu: Libur (Khusus Event)
+                      Minggu Libur
                     </p>
                   </div>
                 </div>
@@ -106,10 +108,12 @@ export default function ContactCard() {
               <p className="text-sm text-slate-500 mb-4 font-medium">
                 Fast Response via WhatsApp:
               </p>
-              <Button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold text-lg h-12 rounded-xl shadow-lg shadow-green-200 mb-6 flex items-center justify-center">
-                <Phone className="w-5 h-5 mr-2" />
-                Chat WhatsApp Sekarang
-              </Button>
+              <a href="https://wa.link/d82i7z">
+                <Button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold text-lg h-12 rounded-xl shadow-lg shadow-green-200 mb-6 flex items-center justify-center">
+                  <Phone className="w-5 h-5 mr-2" />
+                  Chat WhatsApp Sekarang
+                </Button>
+              </a>
 
               <div className="flex justify-center gap-4">
                 <a
@@ -136,13 +140,13 @@ export default function ContactCard() {
             transition={{ duration: 0.6 }}
             className="h-full min-h-100 rounded-3xl shadow-lg border-4 border-white relative"
           >
-            <div className="absolute inset-0 overflow-hidden rounded-3xl">
+            <div className="absolute inset-0 overflow-hidden rounded">
               <iframe
                 title="Lokasi Nikita Catering"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.226077698506!2d110.41507307499696!3d-6.982626393018247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708b4f17973703%3A0x6dca3065eb00109c!2sSimpang%20Lima%20Semarang!5e0!3m2!1sid!2sid!4v1703264426555!5m2!1sid!2sid"
                 width="120%"
                 height="100%"
-                style={{ border: 0, minHeight: "100%", left: "-10%" }}
+                style={{ border: 0, minHeight: "100%" }}
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

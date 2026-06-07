@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 
-const hariList = [
-  "Senin",
-  "Selasa",
-  "Rabu",
-  "Kamis",
-  "Jumat",
-  "Sabtu"
-];
+const hariList = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
 const MenuFormModal = ({ menu, carbTemplates, onClose, onSubmit }) => {
   const [form, setForm] = useState({
@@ -27,7 +20,13 @@ const MenuFormModal = ({ menu, carbTemplates, onClose, onSubmit }) => {
 
   useEffect(() => {
     if (menu) {
-      setForm(menu);
+      const normalizedCarbTemplate =
+        menu.carb_template?.map((c) => (typeof c === "object" ? c._id : c)) ||
+        [];
+      setForm({
+        ...menu,
+        carb_template: normalizedCarbTemplate,
+      });
 
       if (menu.carb_manual) {
         setCarbMode("manual");
@@ -143,8 +142,8 @@ const MenuFormModal = ({ menu, carbTemplates, onClose, onSubmit }) => {
                   type="checkbox"
                   checked={form.carb_template.includes(c._id)}
                   onChange={() => toggleCarbTemplate(c._id)}
-                />
-                {" "}{c.nama}
+                />{" "}
+                {c.nama}
               </label>
             ))}
           </div>
@@ -202,7 +201,12 @@ const MenuFormModal = ({ menu, carbTemplates, onClose, onSubmit }) => {
 
         {/* ACTION */}
         <div className="flex justify-end gap-2">
-          <button className="bg-red-500 hover:bg-red-700 duration-200 px-4 py-2 rounded text-white" onClick={onClose}>Batal</button>
+          <button
+            className="bg-red-500 hover:bg-red-700 duration-200 px-4 py-2 rounded text-white"
+            onClick={onClose}
+          >
+            Batal
+          </button>
 
           <button
             onClick={handleSubmit}
