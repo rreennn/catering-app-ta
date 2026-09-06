@@ -15,7 +15,7 @@ This application was developed to help a catering business manage its menus and 
 - Whatsapp Notification via Fonnte
 
 ## Tech Stack
-For API repository, [see repository] (https://github.com/rreennn/catering-api)
+For API repository, [see repository](https://github.com/rreennn/catering-api)
 ### Frontend
 - React.js
 - Tailwind CSS
