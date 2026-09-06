@@ -1,16 +1,32 @@
-# React + Vite
+# Catering MSME Information System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web-based catering management and ordering system developed for Nikita Catering as my final-year project for a Bachelor's Degree in Informatics Engineering.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This application was developed to help a catering business manage its menus and orders while providing customers with a convenient online ordering experience.
 
-## React Compiler
+## Features
+- User authetication
+- Admin dashboard
+- Menu and order management
+- Ordering and cart system
+- Digital payment integration via Midtrans
+- Whatsapp Notification via Fonnte
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
+For API repository, [see repository] (https://github.com/rreennn/catering-api)
+### Frontend
+- React.js
+- Tailwind CSS
+### Backend
+- Node.js
+- Express.js
+### Database
+- MongoDB
 
-## Expanding the ESLint configuration
+## My Role
+Independently designed and developed the application, including frontend development, backend development, database integration, authentication, third-party API integrations, and deployment.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Live Demo
+[View Live Demo](https://catering-app-ta.vercel.app/)
