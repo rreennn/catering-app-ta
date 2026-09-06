@@ -19,11 +19,8 @@ For API repository, [see repository](https://github.com/rreennn/catering-api)
 ### Frontend
 - React.js
 - Tailwind CSS
-### Backend
-- Node.js
-- Express.js
-### Database
-- MongoDB
+- REST API
+- Axios
 
 ## My Role
 Independently designed and developed the application, including frontend development, backend development, database integration, authentication, third-party API integrations, and deployment.
